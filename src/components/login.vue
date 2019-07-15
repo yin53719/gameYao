@@ -154,7 +154,8 @@ export default {
     },
     checkPhone(r_phone){ 
         let phone = r_phone;
-        if(phone=='' || phone.length<10){ 
+        console.log(phone)
+        if(phone=='' || phone.toString().length<10){ 
           this.$Message.error('手机号码有误，请重填');
             return false; 
         }else{
