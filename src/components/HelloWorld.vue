@@ -6,7 +6,7 @@
 			</div>
 			<div class="box">
 				<div class="phone"><img src="../assets/phone.png" /></div>
-				<a href="http://47.103.50.102:8303/djdl.apk" class="down"><img src="../assets/down.png" download="大吉大利" /></a>
+				<a href="http://47.103.50.102:8303/dajidali.apk" class="down"><img src="../assets/down.png" download="大吉大利" /></a>
 			</div>
 		</div>
 	</div>

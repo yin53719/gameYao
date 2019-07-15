@@ -139,16 +139,15 @@ export default {
               let u = navigator.userAgent, app = navigator.appVersion;
               let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
               let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-              if (isAndroid) {
-                 // window.location.href = 'http://47.103.50.102:8303/' + 'dajidali.apk'
-              }
               if (isIOS) {
-          　　　  window.location.href = 'http://47.103.50.102:8301'
+          　　　  window.location.href = 'http://47.103.50.102:8301';
+              }else{
+                  this.$Loading.finish();
+                  this.$Message.success("注册成功");
+                  this.$router.push("/HelloWorld");
               }
             }
-            this.$Loading.finish();
-            this.$Message.success("注册成功");
-            this.$router.push("/HelloWorld");
+           
           });
       }
     },
@@ -174,15 +173,20 @@ export default {
       this.sendAuthCode = false;
       this.auth_time = 60;
       http.sendCode({ phone: this.r_phone }).then(res => {
+        if(res.data.status===0){
+            this.$Message.error(res.data.msg);
+            return false;
+        }
+        var auth_timetimer = setInterval(() => {
+                this.auth_time--;
+                if (this.auth_time <= 0) {
+                  this.sendAuthCode = true;
+                  clearInterval(auth_timetimer);
+                }
+              }, 1000);
         this.$Message.success("已发送，注意查收");
       });
-      var auth_timetimer = setInterval(() => {
-        this.auth_time--;
-        if (this.auth_time <= 0) {
-          this.sendAuthCode = true;
-          clearInterval(auth_timetimer);
-        }
-      }, 1000);
+      
     }
   }
 };
