@@ -140,7 +140,7 @@ export default {
               let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
               let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
               if (isAndroid) {
-                  window.location.href = 'http://47.103.50.102:8303/' + 'dajidali.apk'
+                 // window.location.href = 'http://47.103.50.102:8303/' + 'dajidali.apk'
               }
               if (isIOS) {
           　　　  window.location.href = 'http://47.103.50.102:8301'
