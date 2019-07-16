@@ -170,13 +170,14 @@ export default {
       if(!this.checkPhone(this.r_phone)){
          return false
       }
-      this.sendAuthCode = false;
-      this.auth_time = 60;
+      
       http.sendCode({ phone: this.r_phone }).then(res => {
         if(res.data.status===0){
             this.$Message.error(res.data.msg);
             return false;
         }
+        this.sendAuthCode = false;
+        this.auth_time = 60;
         var auth_timetimer = setInterval(() => {
                 this.auth_time--;
                 if (this.auth_time <= 0) {
