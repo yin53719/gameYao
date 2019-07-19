@@ -18,7 +18,7 @@
     "stompjs": "^2.3.3",
     "vue": "^2.5.2",
     "vue-loading-template": "^1.3.2",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.0.7",
     "vue2-toast": "^2.0.2"
   },
   "devDependencies": {

@@ -3,7 +3,7 @@
     <div class="login_wrap register_wrap">
       <div class="login_main">
         <div class="login_tit">
-          <img src="../assets/register_tit.png">
+          <img src="@/assets/register_tit.png">
         </div>
         <div class="login_form">
           <div class="item">
@@ -24,7 +24,7 @@
             <input placeholder="邀请码" disabled v-model="invitationCode">
           </div>
           <div class="login_btn" @click="Register">
-            <img src="../assets/register_btn.png">
+            <img src="@/assets/register_btn.png">
           </div>
         </div>
       </div>
@@ -34,11 +34,9 @@
 <script>
 import { web_url, http } from "@/api/request";
 export default {
-  name: "component_name",
+  name: "login",
   data() {
     return {
-      register: false,
-      login: true,
       phone: "",
       password: "",
       r_phone: "",
@@ -52,26 +50,18 @@ export default {
   },
   mounted() {
     console.log(this.$route);
-    this.invitationCode = this.$route.query.invitationCode;
+    this.invitationCode = this.$route.query.invitationCode || "";
   },
   methods: {
-    register_open: function() {
-      this.register = true;
-      this.login = false;
-    },
-    login_open: function() {
-      this.register = false;
-      this.login = true;
-    },
-    Login: function() {
-     if(this.phone==''){
+    Login: function () {
+      if (this.phone == '') {
         this.$Message.error('手机号码必填');
         return false;
       }
-      if(!this.checkPhone(this.phone)){
-         return false
+      if (!this.checkPhone(this.phone)) {
+        return false
       }
-      if(this.password ==''){
+      if (this.password == '') {
         this.$Message.error('密码必填');
         return false;
       }
@@ -85,11 +75,11 @@ export default {
           scope: "all"
         })
         .then(res => {
-          if(res.data.status===0){
-              this.$Message.error(res.data.msg);
-              return false;
-          }else{
-            
+          if (res.data.status === 0) {
+            this.$Message.error(res.data.msg);
+            return false;
+          } else {
+
           }
           sessionStorage.setItem("token", res.data.access_token);
           this.$router.push("/");
@@ -102,21 +92,28 @@ export default {
           }
         });
     },
-    Register: function() {
+    Register: function () {
+      // this.$Loading.finish();
+      // this.$Message.success("注册成功");
+      // this.$router.push({
+      //   path:'/HelloWorld'
+      // });
+      // this.$router.push('/HelloWorld');
+ 
       //   r_password: "",
       // r_password_s: "",
-      if(this.r_phone==''){
+      if (this.r_phone == '') {
         this.$Message.error('手机号码必填');
         return false;
       }
-      if(!this.checkPhone(this.r_phone)){
-         return false
+      if (!this.checkPhone(this.r_phone)) {
+        return false
       }
-      if(this.smsCode ==''){
+      if (this.smsCode == '') {
         this.$Message.error('验证码必填');
         return false;
       }
-      if(this.r_password ==''){
+      if (this.r_password == '') {
         this.$Message.error('密码必填');
         return false;
       }
@@ -132,62 +129,62 @@ export default {
             invCode: this.invitationCode
           })
           .then(res => {
-            if(res.data.status===0){
-                this.$Message.error(res.data.msg);
-                return false;
-            }else{
+            if (res.data.status === 0) {
+              this.$Message.error(res.data.msg);
+              return false;
+            } else {
               let u = navigator.userAgent, app = navigator.appVersion;
               let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
               let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
               if (isIOS) {
-          　　　  window.location.href = 'http://47.103.50.102:8301';
-              }else{
-                  this.$Loading.finish();
-                  this.$Message.success("注册成功");
-                  this.$router.push("/HelloWorld");
+                window.location.href = 'http://47.103.50.102:8301';
+              } else {
+                this.$Loading.finish();
+                this.$Message.success("注册成功");
+                this.$router.push("/HelloWorld");
               }
             }
-           
+
           });
       }
     },
-    checkPhone(r_phone){ 
-        let phone = r_phone;
-        console.log(phone)
-        if(phone=='' || phone.toString().length<10){ 
-          this.$Message.error('手机号码有误，请重填');
-            return false; 
-        }else{
-          return true;
-        } 
+    checkPhone(r_phone) {
+      let phone = r_phone;
+      console.log(phone)
+      if (phone == '' || phone.toString().length < 10) {
+        this.$Message.error('手机号码有误，请重填');
+        return false;
+      } else {
+        return true;
+      }
     },
     // 获取验证码
-    getAuthCode: function() {
-      if(this.r_phone==''){
+    getAuthCode: function () {
+      if (this.r_phone == '') {
         this.$Message.error('手机号码必填');
         return false;
       }
-      if(!this.checkPhone(this.r_phone)){
-         return false
+      if (!this.checkPhone(this.r_phone)) {
+        return false
       }
-      
+
       http.sendCode({ phone: this.r_phone }).then(res => {
-        if(res.data.status===0){
-            this.$Message.error(res.data.msg);
-            return false;
+        if (res.data.status === 0) {
+          this.$Message.error(res.data.msg);
+          return false;
         }
         this.sendAuthCode = false;
         this.auth_time = 60;
         var auth_timetimer = setInterval(() => {
-                this.auth_time--;
-                if (this.auth_time <= 0) {
-                  this.sendAuthCode = true;
-                  clearInterval(auth_timetimer);
-                }
-              }, 1000);
+          this.auth_time--;
+          if (this.auth_time <= 0) {
+            this.sendAuthCode = true;
+            clearInterval(auth_timetimer);
+          }
+        }, 1000);
         this.$Message.success("已发送，注意查收");
       });
-      
+
     }
   }
 };
@@ -196,7 +193,7 @@ export default {
 .login_wrap {
   width: 100%;
   height: 100vh;
-  background: url(../assets/login.jpg);
+  background: url("~@/assets/login.jpg");
   background-size: cover;
 }
 
@@ -207,7 +204,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: url(../assets/login.png);
+  background: url("~@/assets/login.png");
   background-size: cover;
 }
 

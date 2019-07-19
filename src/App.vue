@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -19,6 +19,9 @@ export default {
 body{
   height: 100vh;
   overflow: hidden;
+}
+.aaaa{
+  background: red;
 }
 @media screen and (min-width: 300px) {
     html {font-size: 14px;}
