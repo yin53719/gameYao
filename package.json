@@ -14,7 +14,7 @@
     "iview": "^3.4.1",
     "jquery": "^3.4.0",
     "less": "^3.9.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "stompjs": "^2.3.3",
     "vue": "^2.5.2",
     "vue-loading-template": "^1.3.2",
